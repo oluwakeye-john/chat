@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat App with socket io</title>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+  </head>
+  <body>
+    <div id="login-container">
+      <div class="loginBox">
+        <span id="login-status" class="styled-text">Enter Your Nickname</span>
+        <br /><br />
+        <form id="form-username">
+          <input
+            type="text"
+            id="username-input"
+            placeholder="John Doe"
+            autocomplete="off"
+            required
+          />
+          <br /><br />
+          <input type="submit" class="go-button" value="Let me chat" />
+
+          <br /><br />
+          <label
+            ><input type="checkbox" id="request-notification" /> Push
+            Notifications</label
+          >
+        </form>
+      </div>
+    </div>
+
+    <div id="chat-container">
+      <div class="sidebar">
+        <h1 class="styled-text">My Chat</h1>
+
+        <div href="#" id="username-text"></div>
+        <div href="#" id="user-count"></div>
+      </div>
+      <div class="main-chat">
+        <div id="messages"></div>
+        <form id="message-form">
+          <input
+            id="message-box"
+            placeholder="Type a message"
+            autocomplete="off"
+          />
+        </form>
+      </div>
+    </div>
+
+    <div id="connection">Online</div>
+
+    <script src="./socket.io.js"></script>
+    <script src="./notify.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
