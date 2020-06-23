@@ -1,6 +1,6 @@
 :root {
   --bg: #121212;
-  --bg2: #434343;
+  --bg2: #24292e;
 }
 body {
   background-color: var(--bg);
@@ -101,6 +101,12 @@ input[type="text"]:focus {
   .navbar {
     display: block;
     margin-left: 0;
+    /* box-shadow: 0 0 5px var(--bg2); */
+    border-bottom: 1px solid black;
+  }
+  .message {
+    max-width: 60vw;
+    min-width: 60vw;
   }
 }
 
@@ -116,6 +122,10 @@ input[type="text"]:focus {
     display: none;
     margin-left: 20vw;
     border-left: 1px solid #121212;
+  }
+  .message {
+    max-width: 60vw;
+    min-width: 20vw;
   }
 }
 
@@ -175,15 +185,17 @@ input[type="text"]:focus {
   text-align: left;
 }
 
-.message-break {
-  clear: both;
+.message-wrapper-center {
+  text-align: center;
 }
 
 .message {
+  display: inline-block;
   background: var(--bg2);
   padding: 10px;
   border-radius: 5px;
   margin: 10px;
+  overflow-wrap: break-word;
 }
 
 .go-button {
@@ -205,4 +217,22 @@ input[type="text"]:focus {
 .navbar-text {
   color: white;
   text-decoration: none;
+}
+
+.notification {
+  display: inline-block;
+  background: var(--bg2);
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px;
+  overflow-wrap: break-word;
+}
+
+#user-count-navbar {
+  font-size: small;
+}
+
+#one-line-notification {
+  font-size: small;
+  text-align: right;
 }

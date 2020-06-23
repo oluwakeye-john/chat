@@ -30,6 +30,7 @@ io.on("connection", (socket) => {
       });
       socket.emit("user set", data);
       io.emit("user count", count);
+      socket.broadcast.emit("notification", `${data} joined`);
     } else {
       socket.emit("user exists", "Select another name!");
       console.log("user exist");
@@ -40,9 +41,23 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("new message", data);
   });
 
+  socket.on("user typing start", (data) => {
+    socket.broadcast.emit("typing start", ` - ${data} is typing`);
+  });
+
+  socket.on("user typing stop", (data) => {
+    socket.broadcast.emit("typing stop", "");
+  });
+
   socket.on("disconnect", () => {
     console.log("og: ", count);
-    const filterSocket = users.filter((user) => user.socket !== socket);
+    const filterSocket = users.filter((user) => {
+      if (user.socket !== socket) {
+        return true;
+      } else {
+        socket.broadcast.emit("notification", `${user.username} left`);
+      }
+    });
     users = filterSocket;
     count -= 1;
     io.emit("user count", count);

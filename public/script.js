@@ -15,6 +15,16 @@ const showChats = () => {
   ).innerHTML = `Logged in as ${username}`;
 };
 
+document.getElementById("message-box").addEventListener("keyup", (e) => {
+  if (isLoggedIn) {
+    if (e.target.value) {
+      socket.emit("user typing start", username);
+    } else {
+      socket.emit("user typing stop", username);
+    }
+  }
+});
+
 document.getElementById("form-username").addEventListener("submit", (e) => {
   e.preventDefault();
   if (document.getElementById("request-notification").checked) {
@@ -36,7 +46,6 @@ document.getElementById("message-form").addEventListener("submit", (e) => {
 });
 
 const sendMessage = (msg) => {
-  console.log("sending ", msg);
   socket.emit("send message", {
     sender: username,
     message: msg,
@@ -45,27 +54,25 @@ const sendMessage = (msg) => {
 };
 
 const appendMessage = (sender, msg) => {
-  console.log("appending");
   const time = new Date().toLocaleTimeString();
 
   const senderString = `<strong>${sender}: </strong>`;
-  const dateString = `<br /><small style="font-size: xx-small">${time}</small>`;
+  const dateString = `<br /><small style="font-size: xx-small">${time}</small><br />`;
 
   if (sender === "You") {
     document.getElementById(
       "messages"
-    ).innerHTML += `<p class="message-wrapper-right"><span class="message">${senderString}${msg}</span></p><span class="message-break" /> <br />`;
+    ).innerHTML += `<p class="message-wrapper-right"><span class="message">${senderString}${msg}${dateString}</span></p>`;
   } else {
     document.getElementById(
       "messages"
-    ).innerHTML += `<p class="message-wrapper-left"><span class="message">${senderString}${msg}</span></p><span class="message-break" /> <br />`;
+    ).innerHTML += `<p class="message-wrapper-left"><span class="message">${senderString}${msg}${dateString}</span></p>`;
   }
-  scrollTo(window.innerWidth, window.innerHeight);
+  window.scrollTo(0, document.body.scrollHeight);
   // <span class="message"><strong>${sender}: </strong>${msg}<br /><small style="font-size: xx-small">${time}</small></span><br />
 };
 
 socket.on("user set", (data) => {
-  console.log("logged in");
   username = data;
   isLoggedIn = true;
   showChats();
@@ -87,11 +94,39 @@ socket.on("new message", (data) => {
 
 socket.on("user count", (data) => {
   document.getElementById("user-count").innerText = `${data} users active`;
+  document.getElementById(
+    "user-count-navbar"
+  ).innerText = `${data} users active`;
+});
+
+socket.on("typing start", (data) => {
+  document.getElementById("one-line-notification").innerText = data;
+});
+
+socket.on("typing stop", (data) => {
+  document.getElementById("one-line-notification").innerText = "";
+});
+
+const appendNotification = (data) => {
+  document.getElementById(
+    "messages"
+  ).innerHTML += `<p class="message-wrapper-center"><span class="notification">${data}</span></p>`;
+  window.scrollTo(0, document.body.scrollHeight);
+  // <span class="message"><strong>${sender}: </strong>${msg}<br /><small style="font-size: xx-small">${time}</small></span><br />
+};
+
+socket.on("notification", (data) => {
+  if (isLoggedIn) {
+    appendNotification(data);
+    if (pushNotification) {
+      notifyMe("Notification", data);
+    }
+  }
 });
 
 socket.on("disconnect", () => {
   const status = document.getElementById("connection");
-  status.innerText = "Disconnected";
+  status.innerText = "Offline";
   status.style.color = "red";
 });
 
