@@ -2,6 +2,7 @@ const socket = io();
 
 let isLoggedIn = false;
 let username;
+let pushNotification = false;
 
 // Notification.requestPermission();
 
@@ -17,7 +18,8 @@ const showChats = () => {
 document.getElementById("form-username").addEventListener("submit", (e) => {
   e.preventDefault();
   if (document.getElementById("request-notification").checked) {
-    notifyMe("Welcome to Chat");
+    notifyMe("Welcome", "Welcome to Chat");
+    pushNotification = true;
   }
   const input = document.getElementById("username-input").value;
   socket.emit("set username", input.toLowerCase());
@@ -45,10 +47,21 @@ const sendMessage = (msg) => {
 const appendMessage = (sender, msg) => {
   console.log("appending");
   const time = new Date().toLocaleTimeString();
-  document.getElementById(
-    "messages"
-  ).innerHTML += `<span class="message"><strong>${sender}: </strong>${msg}<br /><small style="font-size: xx-small">${time}</small></span><br />`;
+
+  const senderString = `<strong>${sender}: </strong>`;
+  const dateString = `<br /><small style="font-size: xx-small">${time}</small>`;
+
+  if (sender === "You") {
+    document.getElementById(
+      "messages"
+    ).innerHTML += `<p class="message-wrapper-right"><span class="message">${senderString}${msg}</span></p><span class="message-break" /> <br />`;
+  } else {
+    document.getElementById(
+      "messages"
+    ).innerHTML += `<p class="message-wrapper-left"><span class="message">${senderString}${msg}</span></p><span class="message-break" /> <br />`;
+  }
   scrollTo(window.innerWidth, window.innerHeight);
+  // <span class="message"><strong>${sender}: </strong>${msg}<br /><small style="font-size: xx-small">${time}</small></span><br />
 };
 
 socket.on("user set", (data) => {
@@ -64,10 +77,11 @@ socket.on("user exists", (data) => {
 });
 
 socket.on("new message", (data) => {
-  if (isLoggedIn);
-  {
+  if (isLoggedIn) {
     appendMessage(data.sender, data.message);
-    notifyMe(data.message);
+    if (pushNotification) {
+      notifyMe("New Message", `${data.sender}: ${data.message}`);
+    }
   }
 });
 

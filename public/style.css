@@ -5,9 +5,12 @@
 body {
   background-color: var(--bg);
   color: white;
-  font-family: Tajawal, sans-serif;
+  /* font-family: Tajawal, sans-serif; */
+  font-family: Segoe UI, Helvetica Neue, Helvetica, Lucida Grande, Arial, Ubuntu,
+    Cantarell, Fira Sans, sans-serif;
   padding: 0;
   margin: 0;
+  line-height: 1;
 }
 
 #login-container {
@@ -92,6 +95,11 @@ input[type="text"]:focus {
     left: 0;
   }
   .main-chat {
+    margin-top: 50px;
+    margin-left: 0;
+  }
+  .navbar {
+    display: block;
     margin-left: 0;
   }
 }
@@ -101,7 +109,13 @@ input[type="text"]:focus {
     left: 20vw;
   }
   .main-chat {
+    margin-top: 50px;
     margin-left: 20vw;
+  }
+  .navbar {
+    display: none;
+    margin-left: 20vw;
+    border-left: 1px solid #121212;
   }
 }
 
@@ -153,12 +167,22 @@ input[type="text"]:focus {
   color: white;
 }
 
+.message-wrapper-right {
+  text-align: right;
+}
+
+.message-wrapper-left {
+  text-align: left;
+}
+
+.message-break {
+  clear: both;
+}
+
 .message {
-  display: inline-block;
+  background: var(--bg2);
   padding: 10px;
   border-radius: 5px;
-  /* background: linear-gradient(to right, red, yellow); */
-  background: var(--bg2);
   margin: 10px;
 }
 
@@ -168,4 +192,17 @@ input[type="text"]:focus {
   background-color: white;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: var(--bg2);
+  padding: 20px;
+}
+
+.navbar-text {
+  color: white;
+  text-decoration: none;
 }

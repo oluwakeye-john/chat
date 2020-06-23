@@ -1,4 +1,4 @@
-function notifyMe(text) {
+function notifyMe(title, text) {
   // Let's check if the browser supports notifications
   if (!("Notification" in window)) {
     alert("This browser does not support desktop notification");
@@ -7,7 +7,9 @@ function notifyMe(text) {
   // Let's check whether notification permissions have already been granted
   else if (Notification.permission === "granted") {
     // If it's okay let's create a notification
-    var notification = new Notification(text);
+    var notification = new Notification(title, {
+      body: text,
+    });
   }
 
   // Otherwise, we need to ask the user for permission
@@ -15,14 +17,18 @@ function notifyMe(text) {
     Notification.requestPermission().then(function (permission) {
       // If the user accepts, let's create a notification
       if (permission === "granted") {
-        var notification = new Notification(text);
+        var notification = new Notification(title, {
+          body: text,
+        });
       }
     });
   } else {
     Notification.requestPermission().then(function (permission) {
       // If the user accepts, let's create a notification
       if (permission === "granted") {
-        var notification = new Notification(text);
+        var notification = new Notification(title, {
+          body: text,
+        });
       }
     });
   }
