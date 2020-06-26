@@ -26,7 +26,8 @@ The Project also avoids the use of any library or framework, except the emoji pi
 
 ## Author
 
-- **Oluwakeye John**
+- [Oluwakeye John](https://github.com/oluwakeye-john)
+- [Caleb Pitan](https://github.com/calebpitan)
 
 ## License
 
