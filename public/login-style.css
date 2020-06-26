@@ -1,0 +1,108 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Segoe UI, Helvetica Neue, Helvetica, Lucida Grande, Arial, Ubuntu,
+    Cantarell, Fira Sans, sans-serif;
+
+  background-image: url("./whatsapplight.png");
+  /* background-repeat: no-repeat; */
+  background-size: contain;
+  background-position: top left;
+  background-attachment: fixed;
+}
+
+#login-container {
+  display: block;
+}
+
+#login-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+#login-form {
+  box-shadow: 0 0 10px #ccc;
+  padding: 2.5rem;
+  width: 20rem;
+  border-radius: 8px;
+  background-color: white;
+}
+
+#form-heading {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+#form-box {
+  position: relative;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+#username-input {
+  padding: 0.625rem 10px;
+  width: 93%;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: transparent;
+  transition: 0.2s;
+}
+
+#form-box #username-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.625rem 10px;
+  color: gray;
+  transition: 0.2s;
+  pointer-events: none;
+}
+
+#username-input:focus + #username-label,
+#username-input:not(:placeholder-shown) + #username-label {
+  left: 10px;
+  transform: translateY(-1.25rem);
+  font-size: 0.7rem;
+  background-color: white;
+  color: #1a73e8;
+}
+
+#username-input:focus {
+  outline: 0;
+  border: 2px solid #1a73e8;
+}
+
+#username-input:not(:placeholder-shown):invalid {
+  outline: 0;
+  border: 2px solid red;
+}
+
+#login-button {
+  margin: 0;
+  padding: 0.5rem 2rem;
+  color: white;
+  background-color: #1a73e8;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+.button-wrapper {
+  text-align: center;
+}
+
+.checkbox-wrapper {
+  text-align: center;
+  margin-top: 2rem;
+}

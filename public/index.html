@@ -3,65 +3,118 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chat App with socket io</title>
-    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <title>Chat</title>
+    <link rel="stylesheet" type="text/css" href="./login-style.css" />
+    <link rel="stylesheet" type="text/css" href="./chat-style.css" />
   </head>
   <body>
     <div id="login-container">
-      <div class="loginBox">
-        <span id="login-status" class="styled-text">Enter Your Nickname</span>
-        <br /><br />
-        <form id="form-username">
-          <input
-            type="text"
-            id="username-input"
-            placeholder="John Doe"
-            autocomplete="off"
-            required
-          />
-          <br /><br />
-          <input type="submit" class="go-button" value="Let me chat" />
-
-          <br /><br />
-          <label
-            ><input type="checkbox" id="request-notification" /> Push
-            Notifications</label
-          >
+      <div id="login-box">
+        <form id="login-form">
+          <h2 id="form-heading" class="styled-text">Enter Chat Room</h2>
+          <div id="form-box">
+            <input
+              type="text"
+              id="username-input"
+              placeholder=" "
+              required
+              autocomplete="off"
+              pattern="[a-z0-9A-Z].{3,}"
+              title="Must contain 4 or more characters"
+            />
+            <label id="username-label">Nickname</label>
+          </div>
+          <p id="login-status"></p>
+          <div class="button-wrapper">
+            <button id="login-button" type="submit">Start</button>
+          </div>
+          <div class="checkbox-wrapper">
+            <label>
+              <input type="checkbox" id="request-notification" />
+              Save My Details</label
+            >
+          </div>
         </form>
       </div>
+      <!-- <p id="author-main">
+        ©
+        <a href="https://twitter.com/oluwakeyejohn">oluwakeyejohn</a>
+      </p> -->
     </div>
 
     <div id="chat-container">
-      <div class="sidebar">
-        <h1 class="styled-text">My Chat</h1>
+      <div id="sidebar">
+        <h1 class="styled-text">Chat</h1>
+        <p id="login-status"></p>
+        <br />
 
-        <div href="#" id="username-text"></div>
-        <div href="#" id="user-count"></div>
+        <div>
+          <img src="./user.jpg" id="sidebar-image" />
+          <span id="sidebar-username-text"></span>
+        </div>
+        <p id="user-count"></p>
+        <p id="one-line-notification-sidebar"></p>
+        <p id="author">©Oluwakeye John</p>
+        <!-- <span id="user-count-navbar"></span> -->
+
+        <p id="connection"></p>
       </div>
-      <nav class="navbar">
-        <h1 style="padding: 0; margin: 0;">
-          <a href="#" class="navbar-text styled-text">My Chat</a>
-          <br />
-          <span id="user-count-navbar"></span>
-          <span id="one-line-notification"></span>
-        </h1>
-      </nav>
-      <div class="main-chat">
-        <div id="messages"></div>
-        <form id="message-form">
-          <input
-            id="message-box"
-            placeholder="Type a message"
-            autocomplete="off"
-          />
-        </form>
+
+      <div id="chat-section">
+        <nav id="navbar">
+          <img src="./user.jpg" id="navbar-image" />
+          <span id="username-text"></span>
+          <!-- <span id="user-count-navbar"></span> -->
+          <span id="one-line-notification-navbar"></span>
+        </nav>
+        <div id="messages">
+          <span
+            class="message"
+            style="width: 0; height: 0; padding: 0; margin: 0;"
+          ></span>
+        </div>
+        <div id="bottom-div">
+          <form id="message-box">
+            <span id="emoji-button">😃</span>
+            <input
+              type="text"
+              placeholder="Type message here"
+              id="input-box"
+              autocomplete="off"
+            />
+            <button type="submit">Send</button>
+          </form>
+        </div>
       </div>
     </div>
 
-    <div id="connection">Online</div>
+    <script src="./notify_sw.js"></script>
 
     <script src="./socket.io.js"></script>
-    <script src="./notify.js"></script>
     <script src="./script.js"></script>
+
+    <!-- <script src="./jquery-3.5.1.min.js"></script> -->
+    <script src="./emoji-button-3.1.1.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var picker = new EmojiButton({
+          autoFocusSearch: false,
+          // autoHide: false,
+          showSearch: false,
+          position: "bottom",
+          theme: "dark",
+        });
+        var button = document.querySelector("#emoji-button");
+
+        button.addEventListener("click", () => {
+          picker.togglePicker(button);
+        });
+
+        picker.on("emoji", (emoji) => {
+          document.querySelector("#input-box").value += emoji;
+          document.getElementById("input-box").focus();
+        });
+      });
+    </script>
   </body>
 </html>

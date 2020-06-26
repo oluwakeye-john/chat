@@ -20,11 +20,12 @@ let count = 0;
 
 io.on("connection", (socket) => {
   console.log("A user connected");
-  count += 1;
   socket.on("set username", (data) => {
+    console.log(data);
     const findUser = users.map((user) => user.username === data);
     console.log(findUser);
     if (!findUser.includes(true)) {
+      count += 1;
       users.push({
         username: data,
         socket,
@@ -43,11 +44,21 @@ io.on("connection", (socket) => {
   });
 
   socket.on("user typing start", (data) => {
-    socket.broadcast.emit("typing start", ` - ${data} is typing`);
+    socket.broadcast.emit("typing start", `${data} is typing`);
   });
 
   socket.on("user typing stop", (data) => {
     socket.broadcast.emit("typing stop", "");
+  });
+
+  socket.on("validate user", (data) => {
+    const findUser = users.map((user) => user.username === data);
+    console.log(findUser.includes(true));
+    if (findUser.includes(true)) {
+      socket.emit("user valid", true);
+    } else {
+      socket.emit("user valid", false);
+    }
   });
 
   socket.on("disconnect", () => {
@@ -57,10 +68,11 @@ io.on("connection", (socket) => {
         return true;
       } else {
         socket.broadcast.emit("notification", `${user.username} left`);
+        count -= 1;
+        return false;
       }
     });
     users = filterSocket;
-    count -= 1;
     io.emit("user count", count);
   });
 });
