@@ -22,9 +22,9 @@ io.on("connection", (socket) => {
   console.log("A user connected");
   socket.on("set username", (data) => {
     console.log(data);
-    const findUser = users.map((user) => user.username === data);
+    const findUser = users.filter((user) => user.username === data);
     console.log(findUser);
-    if (!findUser.includes(true)) {
+    if (!findUser.length) {
       count += 1;
       users.push({
         username: data,
@@ -60,6 +60,13 @@ io.on("connection", (socket) => {
       socket.emit("user valid", false);
     }
   });
+
+  // media sharing
+
+  socket.on("media share", (data) => {
+    console.log("incoming media")
+    socket.broadcast.emit("new media", data)
+  })
 
   socket.on("disconnect", () => {
     console.log("og: ", count);
