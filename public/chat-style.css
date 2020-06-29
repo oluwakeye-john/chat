@@ -91,9 +91,10 @@
 
 #message-box input {
   padding: 10px;
-  width: 55%;
+  width: 35%;
   border: 1px solid #ccc;
   border-radius: 10px;
+  margin-right: 5px;
 }
 
 #message-box input:focus {
@@ -101,7 +102,7 @@
 }
 
 #message-box button {
-  margin: 0 10px;
+  margin: 0 5px;
   padding: 10px;
   max-width: 30%;
   border: 1px solid #ccc;
@@ -226,4 +227,13 @@
   background: linear-gradient(to right, red, yellow);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+#image_input {
+  display: none;
+}
+
+.image_add__button {
+  border: 0;
+  outline: 0;
 }

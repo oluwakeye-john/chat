@@ -24,7 +24,7 @@ The Project also avoids the use of any library or framework, except the emoji pi
 - Socket IO
 - Node JS
 
-## Author
+## Authors
 
 - [Oluwakeye John](https://github.com/oluwakeye-john)
 - [Caleb Pitan](https://github.com/calebpitan)
