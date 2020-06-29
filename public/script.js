@@ -255,6 +255,7 @@
             const time = new Date().toLocaleTimeString();
             const image = new Image();
             image.src = result;
+            image.classList.add("media-message");
             image.onload = () => {
               appendMedia("You", image, time);
             };
@@ -272,6 +273,7 @@
       const time = new Date().toLocaleTimeString();
       const image = new Image();
       image.src = data.media;
+      image.classList.add("media-message");
       image.onload = () => {
         appendMedia(data.username, image, time);
       };

@@ -246,3 +246,16 @@
   border: 0;
   outline: 0;
 }
+
+.media-message {
+  max-width: 150px;
+  max-height: 150px;
+}
+
+.expand {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url("image.jpg") no-repeat center;
+  background-size: cover;
+}
