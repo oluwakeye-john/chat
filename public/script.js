@@ -1,4 +1,4 @@
-(function() {
+(function () {
   const socket = io();
 
   let isLoggedIn = false;
@@ -16,6 +16,7 @@
   let typingInterval;
 
   const showChats = () => {
+    document.querySelector("body").classList.add("background");
     document.getElementById("login-container").style.display = "none";
     document.getElementById("chat-container").style.display = "block";
 
@@ -71,7 +72,11 @@
     appendMessage("You", msg, time + " 🍛");
   };
 
-  const appendMessage = (sender, msg, time = new Date().toLocaleTimeString()) => {
+  const appendMessage = (
+    sender,
+    msg,
+    time = new Date().toLocaleTimeString()
+  ) => {
     if (isLoggedIn && username) {
       const senderString = `<strong>${sender}: </strong>`;
       const dateString = `<br /><small style="font-size: xx-small">${time}</small><br />`;
@@ -156,6 +161,13 @@
     }
   });
 
+  const showLogin = () => {
+    document.querySelector("body").classList.remove("background");
+    document.getElementById("login-container").style.display = "block";
+    document.getElementById("chat-container").style.display = "none";
+    document.getElementById("messages").innerHTML = "";
+  };
+
   socket.on("user valid", (data) => {
     if (data) {
       appendMessage("Bot", "you are back online!");
@@ -163,10 +175,7 @@
       isLoggedIn = false;
       username = "";
       pushNotification = false;
-
-      document.getElementById("login-container").style.display = "block";
-      document.getElementById("chat-container").style.display = "none";
-      document.getElementById("messages").innerHTML = "";
+      showLogin();
     }
   });
 
@@ -198,76 +207,74 @@
         const senderString = `<strong>${sender}: </strong>`;
         const dateString = `<br /><small style="font-size: xx-small">${time}</small><br />`;
 
-        const m = document.querySelector("#messages")
-        const p = document.createElement("p")
-        const sp = document.createElement("span")
+        const m = document.querySelector("#messages");
+        const p = document.createElement("p");
+        const sp = document.createElement("span");
 
-        p.className = "message-wrapper-right"
-        sp.className = "message"
+        p.className = "message-wrapper-right";
+        sp.className = "message";
 
         if (sender === "You") {
-          m.append(p)
-          p.append(sp)
-          sp.innerHTML += senderString
-          sp.append(media)
-          sp.innerHTML += dateString
-          sp.style.background = "background-color: #DCF8C6"
+          m.append(p);
+          p.append(sp);
+          sp.innerHTML += senderString;
+          sp.append(media);
+          sp.innerHTML += dateString;
+          sp.style.background = "background-color: #DCF8C6";
         } else {
-          m.append(p)
-          p.append(sp)
-          p.className = "message-wrapper-left"
-          sp.innerHTML += senderString
-          sp.append(media)
-          sp.innerHTML += dateString
-          sp.style.background = "background-color: #DCF8C6"
+          m.append(p);
+          p.append(sp);
+          p.className = "message-wrapper-left";
+          sp.innerHTML += senderString;
+          sp.append(media);
+          sp.innerHTML += dateString;
+          sp.style.background = "background-color: #DCF8C6";
         }
         window.scrollTo(0, document.body.scrollHeight);
       }
-    }
+    };
 
-    const readFile =  function readFile(file) {
+    const readFile = function readFile(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
 
         reader.readAsDataURL(file);
         reader.onload = () => resolve(reader.result);
-        reader.onerror = () => reject(reader.error)
-      })
-    }
+        reader.onerror = () => reject(reader.error);
+      });
+    };
 
     const fileInput = document.querySelector("input[type='file']#image_input");
-    fileInput.addEventListener('change', function() {
-      const files = this.files
-      const fileLength = files.length
+    fileInput.addEventListener("change", function () {
+      const files = this.files;
+      const fileLength = files.length;
 
       for (let i = 0; i < fileLength; i++) {
         readFile(files[i])
           .then((result) => {
-            const time = new Date().toLocaleTimeString()
-            const image =  new Image()
-            image.src = result
+            const time = new Date().toLocaleTimeString();
+            const image = new Image();
+            image.src = result;
             image.onload = () => {
-              appendMedia("You", image, time)
-            }
+              appendMedia("You", image, time);
+            };
             socket.emit("media share", {
               username,
               media: result,
               time,
-            })
+            });
           })
-          .catch(console.log)
+          .catch(console.log);
       }
-    })
+    });
 
     socket.on("new media", (data) => {
-      const time = new Date().toLocaleTimeString()
-      const image =  new Image()
-      image.src = data.media
+      const time = new Date().toLocaleTimeString();
+      const image = new Image();
+      image.src = data.media;
       image.onload = () => {
-        appendMedia(data.username, image, time)
-      }
-    })
-  })()
-
+        appendMedia(data.username, image, time);
+      };
+    });
+  })();
 })();
-

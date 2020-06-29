@@ -3,12 +3,11 @@ body {
   padding: 0;
   font-family: Segoe UI, Helvetica Neue, Helvetica, Lucida Grande, Arial, Ubuntu,
     Cantarell, Fira Sans, sans-serif;
+}
 
-  background-image: url("./whatsapplight.png");
-  /* background-repeat: no-repeat; */
-  background-size: contain;
-  background-position: top left;
-  background-attachment: fixed;
+#dummy-image {
+  width: 0;
+  height: 0;
 }
 
 #login-container {

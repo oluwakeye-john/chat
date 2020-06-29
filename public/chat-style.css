@@ -1,6 +1,15 @@
 #chat-container {
   display: none;
+
   /* position: relative; */
+}
+
+.background {
+  background-image: url("./whatsapplight.png");
+  /* background-repeat: no-repeat; */
+  background-size: contain;
+  background-position: top left;
+  background-attachment: fixed;
 }
 
 #sidebar {
